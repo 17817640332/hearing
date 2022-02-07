@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jie.mapper.WordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jie.pojo.Word">
+        <id column="id" property="id" />
+        <result column="book" property="book" />
+        <result column="unit" property="unit" />
+        <result column="word_name" property="wordName" />
+        <result column="word_url" property="wordUrl" />
+        <result column="is_select" property="isSelect"/>
+        <collection property="words" ofType="com.jie.pojo.TaskWord">
+            <id column="id" property="id" />
+            <result column="word_id" property="wordId" />
+            <result column="task_id" property="taskId" />
+        </collection>
+    </resultMap>
+
+
+
+
+
+
+    <select id="getWordsByTaskId" resultMap="BaseResultMap">
+SELECT
+	w.id,
+	w.book,
+	w.unit,
+	w.word_name,
+	w.word_url,
+	w.is_select
+FROM
+     word AS w,
+     task_word AS tw
+WHERE
+    w.id=tw.word_id
+	And tw.task_id =#{taskId}
+    </select>
+
+</mapper>
